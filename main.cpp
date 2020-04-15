@@ -14,6 +14,9 @@ DECLARE_HOOK_SDL(SDL_PollEvent, int, (SDL_Event *evt));
 DECLARE_HOOK_OPENGL(glBindTexture, void, (GLenum target, GLuint texture));
 DECLARE_HOOK_OPENGL(glTexCoord2f, void, (GLfloat s, GLfloat t));
 DECLARE_HOOK_OPENGL(glTexImage2D, void, (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels));
+DECLARE_HOOK_OPENGL(glVertexPointer, void, (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer));
+DECLARE_HOOK_OPENGL(glVertexAttribPointer, void, (GLuint index, GLint size, GLenum type, GLboolean normalized, GLsizei stride, const void * pointer));
+
 
 void setupHooks() {
 	sdl2Table[SDL_N_SDL_GL_SwapWindow] = (FARPROC) &SDL_GL_SwapWindow;
@@ -21,6 +24,8 @@ void setupHooks() {
 
 	opengl32Table[OPENGL_N_glBindTexture] = (FARPROC) &glBindTexture;
 	opengl32Table[OPENGL_N_glTexImage2D] = (FARPROC) &glTexImage2D;
+	opengl32Table[OPENGL_N_glVertexPointer] = (FARPROC) &glVertexPointer;
+	opengl32Table[OPENGL_N_glVertexAttribPointer] = (FARPROC) &glVertexAttribPointer;
 }
 
 #define SDL_GL_SwapWindow hook_SDL_GL_SwapWindow

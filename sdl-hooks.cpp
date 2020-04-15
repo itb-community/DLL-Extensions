@@ -8,6 +8,7 @@
 
 #include "sdl-utils.h"
 
+#include "glew/glew.h"
 #include <GL/GL.h>
 #include <GL/GLU.h>
 #include "glext.h"
@@ -19,7 +20,8 @@ HOOK_SDL(SDL_GL_SwapWindow, void, (SDL_Window * window)) {
 
 		screen.begin();
 
-		for(SDL::DrawHook *hook: SDL::hookListDraw) {
+		for(auto i = SDL::hookListDraw.rbegin(); i != SDL::hookListDraw.rend(); ++i) {
+			SDL::DrawHook *hook = *i;
 			hook->draw(screen);
 		}
 
@@ -139,6 +141,44 @@ HOOK_OPENGL(glVertex2f, void, (GLfloat x, GLfloat y)) {
 	}
 
 	return (*dll_glVertex2f)(x, y);
+}
+
+HOOK_OPENGL(glVertexPointer, void, (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)) {
+	if (size >= 2 && type == GL_FLOAT && pointer) {
+		if (currentUsedTexture != currentBoundTexture) {
+			currentUsedTexture = currentUsedTexture;
+
+			auto iter = SDL::texturesMap.find(currentBoundTexture);
+			if (iter != SDL::texturesMap.end()) {
+				unsigned long long hash = iter->second;
+				SDL::Coord & coord = SDL::lastFrameMap[hash];
+				Tl &tl = tlStack.at(tlStack.size() - 1);
+				coord.x = ((float*)pointer)[0] + tl.x;
+				coord.y = ((float*)pointer)[1] + tl.y;
+			}
+		}
+	}
+
+	return (*dll_glVertexPointer)(size, type, stride, pointer);
+}
+
+HOOK_OPENGL(glVertexAttribPointer, void, (GLuint index, GLint size,	GLenum type, GLboolean normalized, GLsizei stride, const void * pointer)) {
+	if (index == 0 && size >= 2 && type == GL_FLOAT && pointer) {
+		if (currentUsedTexture != currentBoundTexture) {
+			currentUsedTexture = currentUsedTexture;
+
+			auto iter = SDL::texturesMap.find(currentBoundTexture);
+			if (iter != SDL::texturesMap.end()) {
+				unsigned long long hash = iter->second;
+				SDL::Coord & coord = SDL::lastFrameMap[hash];
+				Tl &tl = tlStack.at(tlStack.size() - 1);
+				coord.x = ((float*)pointer)[0] + tl.x;
+				coord.y = ((float*)pointer)[1] + tl.y;
+			}
+		}
+	}
+
+	return (*dll_glVertexAttribPointer)(index, size, type, normalized, stride, pointer);
 }
 
 HOOK_OPENGL(glTexImage2D, void, (GLenum target, GLint level, GLint internalformat, GLsizei width, GLsizei height, GLint border, GLenum format, GLenum type, const GLvoid *pixels)) {

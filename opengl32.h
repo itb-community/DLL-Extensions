@@ -384,4 +384,5 @@ extern FARPROC opengl32Table[];
 #define OPENGL_N_wglUseFontBitmapsW 365
 #define OPENGL_N_wglUseFontOutlinesA 366
 #define OPENGL_N_wglUseFontOutlinesW 367
+#define OPENGL_N_glVertexAttribPointer 368
 #endif

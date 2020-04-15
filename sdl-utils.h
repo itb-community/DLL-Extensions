@@ -11,6 +11,7 @@
 
 #include "blob.h"
 
+#include "glew/glew.h"
 #include <GL/GL.h>
 #include <GL/GLU.h>
 

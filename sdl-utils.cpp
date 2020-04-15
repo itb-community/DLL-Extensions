@@ -7,6 +7,7 @@
 #include "Gdiplus.h"
 #pragma comment(lib,"Gdiplus.lib")
 
+#include "glew/glew.h"
 #include <GL/GL.h>
 #include <GL/GLU.h>
 #include "glext.h"

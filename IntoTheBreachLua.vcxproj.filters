@@ -13,6 +13,7 @@
     <ClCompile Include="xxhash.c" />
     <ClCompile Include="blob.cc" />
     <ClCompile Include="os.cc" />
+    <ClCompile Include="glew\glew.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lua-functions.h" />
@@ -79,6 +80,10 @@
     <ClInclude Include="xxhash.h" />
     <ClInclude Include="blob.h" />
     <ClInclude Include="os.h" />
+    <ClInclude Include="glext.h" />
+    <ClInclude Include="glew\glew.h" />
+    <ClInclude Include="glew\glxew.h" />
+    <ClInclude Include="glew\wglew.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="exports.def" />

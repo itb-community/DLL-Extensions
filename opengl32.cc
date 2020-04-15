@@ -1,7 +1,7 @@
 #include <windows.h>
 #pragma pack(1)
 
-FARPROC opengl32Table[368] = { 0 };
+FARPROC opengl32Table[369] = { 0 };
 
 bool installOpenglHooks() {
 	char system32[0x200];
@@ -379,6 +379,7 @@ bool installOpenglHooks() {
 	opengl32Table[365] = GetProcAddress(opengl32Handle, "wglUseFontBitmapsW");
 	opengl32Table[366] = GetProcAddress(opengl32Handle, "wglUseFontOutlinesA");
 	opengl32Table[367] = GetProcAddress(opengl32Handle, "wglUseFontOutlinesW");
+	opengl32Table[368] = GetProcAddress(opengl32Handle, "glVertexAttribPointer");
 
 	return true;
 }
@@ -752,4 +753,5 @@ PROXY(364)
 PROXY(365)
 PROXY(366)
 PROXY(367)
+PROXY(368)
 #undef PROXY
