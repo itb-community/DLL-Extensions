@@ -491,6 +491,34 @@ Surface::Surface(Surface *parent, std::vector<Color *> colormap) {
 	createSurfaceFromPixelData(w, h);
 }
 
+Surface::Surface(Surface *parent, Color *color) {
+	init();
+	if(!parent->isValid()) return;
+
+	int w = parent->w();
+	int h = parent->h();
+
+	Uint32 *data = new Uint32[w * h];
+	Uint32 *pixels = (Uint32 *) parent->pixelData;
+
+	Uint32 rScale = 0x000000ff;
+	Uint32 gScale = 0x0000ff00;
+	Uint32 bScale = 0x00ff0000;
+	for(int x = 0; x < w; x++) {
+		for(int y = 0; y < h; y++) {
+			Uint32 pixel = pixels[x + y * w];
+			Uint32 r = ((pixel & 0x000000ff) * color->r / 0xff) & 0x000000ff;
+			Uint32 g = ((pixel & 0x0000ff00) * color->g / 0xff) & 0x0000ff00;
+			Uint32 b = ((pixel & 0x00ff0000) * color->b / 0xff) & 0x00ff0000;
+			Uint32 a = (((pixel >> 24) & 0x000000ff) * color->a / 0xff) << 24;
+			data[x + y * w] = a | r | g | b;
+		}
+	}
+
+	pixelData = (unsigned char *) data;
+	createSurfaceFromPixelData(w, h);
+}
+
 Surface::Surface() {
 	init();
 }

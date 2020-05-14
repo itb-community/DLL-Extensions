@@ -91,6 +91,7 @@ struct Surface {
 	Surface(int scaling, Surface *parent);
 	Surface(Blob *blob);
 	Surface(Surface *parent, std::vector<Color *> colormap);
+	Surface(Surface* parent, Color* mask);
 
 	int w() {
 		return width;

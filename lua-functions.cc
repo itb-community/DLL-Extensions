@@ -213,7 +213,10 @@ void installFunctions(lua_State *L) {
 		.addConstructor <void(*) (int scaling, SDL::Surface *base)>()
 		.endClass()
 
-		
+		.deriveClass<SDL::Surface, SDL::Surface>("multiply")
+		.addConstructor <void(*) (SDL::Surface *base, SDL::Color *color)>()
+		.endClass()
+
 		.deriveClass<SurfaceColorMapped, SDL::Surface>("colormapped")
 		.addConstructor <void(*) (SDL::Surface *parent, LuaRef r)>()
 		.endClass()
