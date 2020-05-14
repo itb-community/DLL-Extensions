@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30104.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IntoTheBreachLua", "IntoTheBreachLua.vcxproj", "{A6F64800-72AD-4A40-956D-738B2ADF2477}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -31,8 +31,8 @@ Global
 		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Debug-exe|x64.Build.0 = Debug-exe|x64
 		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Debug-exe|x86.ActiveCfg = Debug-exe|Win32
 		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Debug-exe|x86.Build.0 = Debug-exe|Win32
-		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Release|x64.ActiveCfg = Release|x64
-		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Release|x64.Build.0 = Release|x64
+		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Release|x64.ActiveCfg = Release|Win32
+		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Release|x64.Build.0 = Release|Win32
 		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Release|x86.ActiveCfg = Release|Win32
 		{A6F64800-72AD-4A40-956D-738B2ADF2477}.Release|x86.Build.0 = Release|Win32
 		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Debug|x64.ActiveCfg = Debug|x64
@@ -43,8 +43,8 @@ Global
 		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Debug-exe|x64.Build.0 = Debug|x64
 		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Debug-exe|x86.ActiveCfg = Debug|Win32
 		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Debug-exe|x86.Build.0 = Debug|Win32
-		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Release|x64.ActiveCfg = Release|x64
-		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Release|x64.Build.0 = Release|x64
+		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Release|x64.ActiveCfg = Release|Win32
+		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Release|x64.Build.0 = Release|Win32
 		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Release|x86.ActiveCfg = Release|Win32
 		{9B1ED885-F2C8-4904-B0E6-A3757F287296}.Release|x86.Build.0 = Release|Win32
 		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Debug|x64.ActiveCfg = Debug|x64
@@ -55,8 +55,8 @@ Global
 		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Debug-exe|x64.Build.0 = Debug|x64
 		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Debug-exe|x86.ActiveCfg = Debug|Win32
 		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Debug-exe|x86.Build.0 = Debug|Win32
-		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Release|x64.ActiveCfg = Release|x64
-		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Release|x64.Build.0 = Release|x64
+		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Release|x64.ActiveCfg = Release|Win32
+		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Release|x64.Build.0 = Release|Win32
 		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Release|x86.ActiveCfg = Release|Win32
 		{CD922C59-2CBB-448E-B4AE-E42C02DD2CF9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
