@@ -71,6 +71,9 @@ struct FileFont :public Font {
 	void init(double size);
 };
 
+// allows adding more single parameter constructors without worry about too many overloads
+enum SurfaceTransform { GRAYSCALE };
+
 struct Surface {
 	unsigned char *pixelData;
 	GLuint textureId;
@@ -92,6 +95,7 @@ struct Surface {
 	Surface(Blob *blob);
 	Surface(Surface *parent, std::vector<Color *> colormap);
 	Surface(Surface* parent, Color* mask);
+	Surface(Surface* parent, SurfaceTransform type);
 
 	int w() {
 		return width;

@@ -519,6 +519,32 @@ Surface::Surface(Surface *parent, Color *color) {
 	createSurfaceFromPixelData(w, h);
 }
 
+// type is currently unused, but provided to make this easier to extend in the future
+Surface::Surface(Surface *parent, SurfaceTransform type) {
+	init();
+	if(!parent->isValid()) return;
+
+	int w = parent->w();
+	int h = parent->h();
+
+	Uint32 *data = new Uint32[w * h];
+	Uint32 *pixels = (Uint32 *) parent->pixelData;
+
+	for(int x = 0; x < w; x++) {
+		for(int y = 0; y < h; y++) {
+			Uint32 pixel = pixels[x + y * w];
+			Uint32 r = pixel & 0x000000ff;
+			Uint32 g = (pixel >> 8) & 0x000000ff;
+			Uint32 b = (pixel >> 16) & 0x000000ff;
+			Uint32 gray = (21 * r + 72 * g + 7 * b) / 100;
+			data[x + y * w] = pixel & 0xff000000 | gray | (gray << 8) | (gray << 16);
+		}
+	}
+
+	pixelData = (unsigned char *) data;
+	createSurfaceFromPixelData(w, h);
+}
+
 Surface::Surface() {
 	init();
 }
