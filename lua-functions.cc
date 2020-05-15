@@ -126,7 +126,13 @@ static std::vector<SDL::Color *> createColormapFromLua(LuaRef & r) {
 
 struct SurfaceColorMapped :public SDL::Surface {
 	SurfaceColorMapped(SDL::Surface *parent, LuaRef r) :SDL::Surface(parent, createColormapFromLua(r)) {
-	
+
+	}
+};
+
+struct SurfaceGrayscale :public SDL::Surface {
+	SurfaceGrayscale(SDL::Surface *parent) :SDL::Surface(parent, SDL::SurfaceTransform::GRAYSCALE) {
+
 	}
 };
 
@@ -213,9 +219,16 @@ void installFunctions(lua_State *L) {
 		.addConstructor <void(*) (int scaling, SDL::Surface *base)>()
 		.endClass()
 
-		
+		.deriveClass<SDL::Surface, SDL::Surface>("multiply")
+		.addConstructor <void(*) (SDL::Surface *base, SDL::Color *color)>()
+		.endClass()
+
 		.deriveClass<SurfaceColorMapped, SDL::Surface>("colormapped")
 		.addConstructor <void(*) (SDL::Surface *parent, LuaRef r)>()
+		.endClass()
+
+		.deriveClass<SurfaceGrayscale, SDL::Surface>("grayscale")
+		.addConstructor <void(*) (SDL::Surface *base)>()
 		.endClass()
 
 		.deriveClass<SDL::SurfaceScreenshot, SDL::Surface>("screenshot")
