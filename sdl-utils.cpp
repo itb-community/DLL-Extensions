@@ -226,8 +226,8 @@ void Surface::setBitmap(void *data, int sx, int sy, int w, int h, int stride) {
 	}
 
 	for(int y = 0; y < h; y++) {
-		unsigned char *dst = &pixelData[y*w * 4];
-		unsigned char *src = &pixels[initial + sx * 4 + (sy + y) * stride];
+		unsigned char *dst = pixelData + (y * w * 4);
+		unsigned char *src = pixels + (initial + sx * 4 + (sy + y) * stride);
 
 		for(int x = 0; x < w; x++) {
 			dst[0] = src[2];
