@@ -1,18 +1,22 @@
 # IntoTheBreachLua
 
-This library works as a proxy for multiple DLLs for the [Into the Breach](https://subsetgames.com/itb.html) game in order to provide additional functionality to the modding community.
+This library works as a proxy for multiple DLLs for the [Into the Breach](https://subsetgames.com/itb.html) game in order to provide additional functionality to the modding community. 
 
 ## Installation
-If you downloaded a binary release (an archive with a buch of dlls and folders in it) the installation procedure is as follows:
-1. Install [mod loader](https://subsetgames.com/forum/viewtopic.php?f=26&t=32833&sid=7dae5dbaf729740ce2019cd048c37e99).
-2. Extract evertything from the archive into game directory, overwriting, among others, lua5.1.dll and SDL2.dll.
+This library is not used directly for modding, instead you should download [kartoFlane's modloader](https://github.com/kartoFlane/ITB-ModLoader) which ships a release of this dll.
 
-This is it. Apart from installing API for mods, this will also install squad selection dialog (making it easier to play squads added by other mods).
+## Building
 
-If you want to only install API and don't want squad selection (for whatever reasons), only extract .dll files from the archive.
+This section describes how to build this project.
 
-## API
-A number of functions are added to game's lua VMs. A full description of what's added is in [api.md](api.md) file.
+1. Install [Visual Studio](https://visualstudio.microsoft.com/downloads/). The community edition should work, but it is not tested with Visual Studio Code at this time.
+2. Download [Windows SDK version 8.1](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/).
+3. Open the project solution `IntoTheBreachLua.sln` in Visual Studio
+4. Right click on the project and properties and click "Configuration Manager...".
+5. Ensure "Platform" is set to "Win32" and "Configuration" is "Release" for all builds, and "Active Solution Platform" is set to "x86".
+6. Exit configuration manager and properties.
+7. Right click the solution and click "Rebuild Solution"
+8. The output "SDL2.dll" should appear in the releases folder.
 
 ## Error reporting
 Lua errors that happen in game are dumped to error.txt file. If something doesn't work right in your script and the game is being secretive about what exactly, check errors.txt.
