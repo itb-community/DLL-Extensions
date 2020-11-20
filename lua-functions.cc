@@ -20,7 +20,7 @@ int listDirectoryFull(lua_State *L, int mode) {
 	WIN32_FIND_DATAA fdFile;
 	HANDLE handle = NULL;
 
-	std::string path = format("%s\\*.*", dirname);
+	std::string path = format(".\\%s\\*.*", dirname);
 	if((handle = FindFirstFileA(path.c_str(), &fdFile)) == INVALID_HANDLE_VALUE) {
 		return 1;
 	}
