@@ -25,7 +25,7 @@ int listDirectoryFull(lua_State *L, int mode) {
 		return 1;
 	}
 
-	int index = 0;
+	int index = 1;
 	do {
 		if(strcmp(fdFile.cFileName, ".") == 0 || strcmp(fdFile.cFileName, "..") == 0)
 			continue;
