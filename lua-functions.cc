@@ -245,6 +245,7 @@ void installFunctions(lua_State *L) {
 		.addFunction("drawrect", &SDL::Screen::drawrect)
 		.addFunction("clip", &SDL::Screen::clip)
 		.addFunction("unclip", &SDL::Screen::unclip)
+		.addFunction("getClipRect", &SDL::Screen::getClipRect)
 		.endClass()
 
 		.beginClass <DrawHook>("drawHook")
