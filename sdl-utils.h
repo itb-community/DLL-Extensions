@@ -27,6 +27,8 @@ struct Color :public SDL_Color {
 
 struct Rect :public SDL_Rect {
 	Rect(int x, int y, int w, int h);
+	Rect getIntersect(Rect*);
+	Rect getUnion(Rect*);
 };
 
 struct TextSettings {

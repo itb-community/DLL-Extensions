@@ -277,6 +277,8 @@ void installFunctions(lua_State *L) {
 		.addData("y", &SDL::Rect::y)
 		.addData("w", &SDL::Rect::w)
 		.addData("h", &SDL::Rect::h)
+		.addFunction("getIntersect", &SDL::Rect::getIntersect)
+		.addFunction("getUnion", &SDL::Rect::getUnion)
 		.endClass()
 
 		.beginClass <SDL::Timer>("timer")
