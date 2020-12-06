@@ -91,6 +91,22 @@ Rect::Rect(int x, int y, int w, int h) {
 	this->h = h;
 }
 
+Rect Rect::getIntersect(Rect* other) {
+	Rect* result;
+	if (SDL_IntersectRect(this, other, result)) {
+		return *result;
+	}
+
+	return Rect(0, 0, 0, 0);
+}
+
+Rect Rect::getUnion(Rect* other) {
+	Rect* result;
+	SDL_UnionRect(this, other, result);
+
+	return *result;
+}
+
 Font::Font() {
 	defaults();
 }
