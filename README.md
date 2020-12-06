@@ -9,6 +9,14 @@ This library is not used directly for modding, instead you should download [kart
 
 This section describes how to build this project.
 
+### Automatic build - GitHub Actions
+
+This project has a manual action pipeline which builds the "SDL2.dll", and stores it as an artifact. This is the easiest / recommended way to build, unless you need to rapidly develop and test features, in which case local build is the better option.
+
+Project members can go to Actions tab, select MSBuild workflow, click on the "Run workflow" dropdown, and then on the green "Run workflow" button to start the workflow. It takes several minutes to complete, and when it does, "SDL2.dll" will be available in the workflow's artifacts section.
+
+### Local build
+
 1. Install [Visual Studio](https://visualstudio.microsoft.com/downloads/). The community edition should work, but it is not tested with Visual Studio Code at this time.
 2. Download [Windows SDK version 8.1](https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/).
 3. Open the project solution `IntoTheBreachLua.sln` in Visual Studio
