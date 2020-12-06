@@ -161,6 +161,7 @@ struct Screen {
 	void drawrect(Color *color, Rect *rect);
 	void clip(Rect *rect);
 	void unclip();
+	Rect* getClipRect();
 
 protected:
 

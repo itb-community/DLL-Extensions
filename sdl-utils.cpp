@@ -703,6 +703,13 @@ void Screen::applyClipping() {
 	}
 }
 
+Rect* Screen::getClipRect() {
+	if (clippingRects.empty())
+		return NULL;
+
+	return &clippingRects.at(clippingRects.size() - 1);
+}
+
 DrawHook::DrawHook() {
 	hookListDraw.push_back(this);
 }
