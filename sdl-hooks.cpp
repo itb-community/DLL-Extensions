@@ -127,7 +127,7 @@ static int glVertex2fNum = 0;
 HOOK_OPENGL(glVertex2f, void, (GLfloat x, GLfloat y)) {
 	if(glVertex2fNum++ % 4 == 0) {
 		if(currentUsedTexture != currentBoundTexture) {
-			currentUsedTexture = currentUsedTexture;
+			currentUsedTexture = currentBoundTexture;
 
 			auto iter = SDL::texturesMap.find(currentBoundTexture);
 			if(iter != SDL::texturesMap.end()) {
@@ -146,7 +146,7 @@ HOOK_OPENGL(glVertex2f, void, (GLfloat x, GLfloat y)) {
 HOOK_OPENGL(glVertexPointer, void, (GLint size, GLenum type, GLsizei stride, const GLvoid *pointer)) {
 	if (size >= 2 && type == GL_FLOAT && pointer) {
 		if (currentUsedTexture != currentBoundTexture) {
-			currentUsedTexture = currentUsedTexture;
+			currentUsedTexture = currentBoundTexture;
 
 			auto iter = SDL::texturesMap.find(currentBoundTexture);
 			if (iter != SDL::texturesMap.end()) {
@@ -165,7 +165,7 @@ HOOK_OPENGL(glVertexPointer, void, (GLint size, GLenum type, GLsizei stride, con
 HOOK_OPENGL(glVertexAttribPointer, void, (GLuint index, GLint size,	GLenum type, GLboolean normalized, GLsizei stride, const void * pointer)) {
 	if (index == 0 && size >= 2 && type == GL_FLOAT && pointer) {
 		if (currentUsedTexture != currentBoundTexture) {
-			currentUsedTexture = currentUsedTexture;
+			currentUsedTexture = currentBoundTexture;
 
 			auto iter = SDL::texturesMap.find(currentBoundTexture);
 			if (iter != SDL::texturesMap.end()) {
