@@ -73,6 +73,7 @@ namespace event{
 	int mousebuttondown = SDL_MOUSEBUTTONDOWN;
 	int mousebuttonup = SDL_MOUSEBUTTONUP;
 	int mousewheel = SDL_MOUSEWHEEL;
+	int textinput = SDL_TEXTINPUT;
 }
 
 struct DrawHook :public SDL::DrawHook {
@@ -263,6 +264,7 @@ void installFunctions(lua_State *L) {
 		.addFunction("y", &SDL::Event::y)
 		.addFunction("wheel", &SDL::Event::wheely)
 		.addFunction("keycode", &SDL::Event::keycode)
+		.addCFunction("textinput", &SDL::Event::textinput)
 		.addFunction("mousebutton", &SDL::Event::mousebutton)
 		.endClass()
 
@@ -295,6 +297,7 @@ void installFunctions(lua_State *L) {
 		.addVariable("mousebuttondown", &event::mousebuttondown, false)
 		.addVariable("mousebuttonup", &event::mousebuttonup, false)
 		.addVariable("mousewheel", &event::mousewheel, false)
+		.addVariable("textinput", &event::textinput, false)
 		.endNamespace()
 
 		.beginNamespace("mouse")

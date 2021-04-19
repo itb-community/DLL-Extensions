@@ -769,6 +769,10 @@ int Event::wheely() {
 int Event::keycode() {
 	return event.key.keysym.sym;
 }
+int Event::textinput(lua_State* L) {
+	lua_pushstring(L, event.text.text);
+	return 1;
+}
 
 
 
