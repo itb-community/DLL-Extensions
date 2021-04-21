@@ -195,6 +195,8 @@ void Surface::init() {
 	hash = 0;
 	width = 0;
 	height = 0;
+	padl = 0;
+	padr = 0;
 }
 
 Surface::~Surface() {
@@ -311,6 +313,38 @@ Surface::Surface(Blob *blob) {
 	blob->reset();
 }
 
+UINT findLeftPadding(Gdiplus::BitmapData* bitmapData, UINT width, UINT height) {
+	UINT *rawBitmapData = (UINT*)bitmapData->Scan0;
+	UINT padding = 0;
+	for (UINT x = 0; x < width; x++) {
+		for (UINT y = 0; y < height; y++) {
+			UINT color = rawBitmapData[y * bitmapData->Stride / 4 + x];
+			int red = (color & 0xff0000) >> 16;
+			if (red != NULL) {
+				return padding;
+			}
+		}
+		padding++;
+	}
+	return padding;
+}
+
+int findRightPadding(Gdiplus::BitmapData* bitmapData, UINT width, UINT height) {
+	UINT *rawBitmapData = (UINT*)bitmapData->Scan0;
+	int padding = 0;
+	for (int x = width - 1; x >= 0; x--) {
+		for (int y = 0; y < height; y++) {
+			UINT color = rawBitmapData[y * bitmapData->Stride / 4 + x];
+			int red = (color & 0xff0000) >> 16;
+			if (red != NULL) {
+				return padding;
+			}
+		}
+		padding++;
+	}
+	return padding;
+}
+
 Surface::Surface(const Font * font, const TextSettings *settings, const std::string &text) {
 	init();
 	int outline = settings->outlineWidth;
@@ -338,19 +372,46 @@ Surface::Surface(const Font * font, const TextSettings *settings, const std::str
 
 	Gdiplus::Bitmap bitmap((int) ceil(boundRect.Width), (int) ceil(boundRect.Height), PixelFormat32bppARGB);
 	Gdiplus::Graphics *g = Gdiplus::Graphics::FromImage(&bitmap);
-	Gdiplus::SolidBrush brush(color);
 
-//	Gdiplus::Pen pen(Gdiplus::Color(255, 255, 0, 0), 4.0f);
-//	g->DrawRectangle(&pen, 0, 0, (int)boundRect.Width, (int)boundRect.Height);
+	Gdiplus::SolidBrush redbrush(Gdiplus::Color::Red);
+	g->DrawString(s.c_str(), -1, *font, Gdiplus::PointF(0, 0), &redbrush);
+
+	UINT oldWidth = bitmap.GetWidth();
+	UINT oldHeight = bitmap.GetHeight();
+
+	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
+	Gdiplus::Rect rect(0, 0, oldWidth, oldHeight);
+	bitmap.LockBits(&rect, Gdiplus::ImageLockModeRead, PixelFormat32bppARGB, bitmapData);
+
+	padl = findLeftPadding(bitmapData, oldWidth, oldHeight);
+	padr = findRightPadding(bitmapData, oldWidth, oldHeight);
+
+	if (padl == oldWidth && padr == oldWidth) {
+		padl = 0;
+		padr = 0;
+	}
+
+	bitmap.UnlockBits(bitmapData);
+	delete bitmapData;
+	delete g;
+
+	Gdiplus::Bitmap target((int)oldWidth + 2 * outline - padl - padr, (int)oldHeight, PixelFormat32bppARGB);
+	g = Gdiplus::Graphics::FromImage(&target);
 
 	g->SetTextRenderingHint(antialias ?
-							Gdiplus::TextRenderingHintAntiAlias :
-							Gdiplus::TextRenderingHintSingleBitPerPixelGridFit
+		Gdiplus::TextRenderingHintAntiAlias :
+		Gdiplus::TextRenderingHintSingleBitPerPixelGridFit
 	);
-	g->DrawString(s.c_str(), -1, *font, Gdiplus::PointF((Gdiplus::REAL) outline, (Gdiplus::REAL) outline), &brush);
+
+	//Gdiplus::Pen pen(Gdiplus::Color(255, 255, 0, 0), 4.0f);
+	//g->DrawRectangle(&pen, 0, 0, (int)oldWidth + 2 * outline - padl - padr, (int)oldHeight);
+
+	Gdiplus::SolidBrush brush(color);
+	Gdiplus::PointF origin((Gdiplus::REAL) (outline - padl), (Gdiplus::REAL) outline);
+	g->DrawString(s.c_str(), -1, *font, origin, &brush);
 	delete g;
-	
-	setBitmap(&bitmap);
+
+	setBitmap(&target);
 
 	ReleaseDC(hDesktopWnd, hDesktopDC);
 	DeleteDC(hCaptureDC);

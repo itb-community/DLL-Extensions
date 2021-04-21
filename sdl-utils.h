@@ -83,6 +83,7 @@ struct Surface {
 	unsigned long long hash;
 	int width, height;
 	double x, y;
+	int padl, padr;
 
 	void setBitmap(Gdiplus::Bitmap *bitmap);
 	void setBitmap(HBITMAP hbitmap, int x, int y, int w, int h);
@@ -106,6 +107,14 @@ struct Surface {
 
 	int h() {
 		return height;
+	}
+
+	int leftPadding() {
+		return padl;
+	}
+
+	int rightPadding() {
+		return padr;
 	}
 
 	bool wasDrawn();
