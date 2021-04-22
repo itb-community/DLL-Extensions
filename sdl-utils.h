@@ -10,6 +10,7 @@
 #include "Gdiplus.h"
 
 #include "blob.h"
+#include "lua.h"
 
 #include "glew/glew.h"
 #include <GL/GL.h>
@@ -187,6 +188,7 @@ struct Event {
 
 	int wheely();
 	int keycode();
+	int textinput(lua_State* L);
 };
 
 struct EventHook {
