@@ -373,6 +373,11 @@ Surface::Surface(const Font * font, const TextSettings *settings, const std::str
 	Gdiplus::Bitmap bitmap((int) ceil(boundRect.Width), (int) ceil(boundRect.Height), PixelFormat32bppARGB);
 	Gdiplus::Graphics *g = Gdiplus::Graphics::FromImage(&bitmap);
 
+	g->SetTextRenderingHint(antialias ?
+		Gdiplus::TextRenderingHintAntiAlias :
+		Gdiplus::TextRenderingHintSingleBitPerPixelGridFit
+	);
+
 	Gdiplus::SolidBrush redbrush(Gdiplus::Color::Red);
 	g->DrawString(s.c_str(), -1, *font, Gdiplus::PointF(0, 0), &redbrush);
 
