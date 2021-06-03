@@ -21,6 +21,7 @@ namespace SDL {
 GLuint glTexture(unsigned char *pixelData, int w, int h);
 
 struct Color :public SDL_Color {
+	static Color White;
 	Color();
 	Color(int r, int g, int b, int a);
 	Color(int r, int g, int b);
@@ -159,7 +160,7 @@ struct Screen {
 	void finishWithoutSwapping();
 	void finish();
 
-	void blitRect(Surface *src, Rect *srcRect, Rect *destRect);
+	void blitRect(Surface *src, Rect *srcRect, Rect *destRect, Color *color);
 	void blit(Surface *src, Rect *srcRect, int destx, int desty);
 	void drawrect(Color *color, Rect *rect);
 	void clip(Rect *rect);

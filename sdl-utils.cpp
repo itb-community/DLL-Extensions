@@ -54,8 +54,8 @@ GLuint glTexture(unsigned char *pixelData, int w, int h) {
 	glTexImage2D(GL_TEXTURE_2D, 0, internal_format, w, h, 0, texture_format, tex_type, pixelData);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_BASE_LEVEL, 0);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 0);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
 	glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
@@ -83,6 +83,8 @@ Color::Color(int r, int g, int b) {
 	this->b = b;
 	this->a = 0xff;
 }
+
+Color Color::White = Color();
 
 Rect::Rect(int x, int y, int w, int h) {
 	this->x = x;
@@ -637,7 +639,7 @@ void Screen::finish() {
 	SDL_GL_SwapWindow(window);
 }
 
-void Screen::blitRect(Surface *src, Rect *srcRect, Rect *destRect) {
+void Screen::blitRect(Surface *src, Rect *srcRect, Rect *destRect, Color *color) {
 	if(!src->isValid()) return;
 
 	int x1 = destRect->x;
@@ -645,7 +647,11 @@ void Screen::blitRect(Surface *src, Rect *srcRect, Rect *destRect) {
 	int x2 = destRect->x + destRect->w;
 	int y2 = destRect->y + destRect->h;
 
-	glColor3f(1, 1, 1);
+	glColor4f( (float)color->r / 0xFF,
+			   (float)color->g / 0xFF,
+			   (float)color->b / 0xFF,
+			   (float)color->a / 0xFF);
+
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, src->texture());
 
@@ -662,7 +668,7 @@ void Screen::blit(Surface *src, Rect *srcRect, int destx, int desty) {
 
 	Rect destRect = { destx, desty, src->w(), src->h() };
 
-	blitRect(src, srcRect, &destRect);
+	blitRect(src, srcRect, &destRect, &Color::White);
 }
 void Screen::drawrect(Color *color, Rect *rect) {
 	glColor4f(color->r/255.0f, color->g / 255.0f, color->b / 255.0f, color->a / 255.0f);

@@ -144,6 +144,7 @@ void installFunctions(lua_State *L) {
 		.beginNamespace("sdl")
 
 		.beginClass <SDL::Color>("color")
+		.addStaticData("white", &SDL::Color::White, false)
 		.addData("r", &SDL::Color::r)
 		.addData("g", &SDL::Color::g)
 		.addData("b", &SDL::Color::b)
@@ -243,6 +244,7 @@ void installFunctions(lua_State *L) {
 		.addFunction("begin", &SDL::Screen::begin)
 		.addFunction("finish", &SDL::Screen::finish)
 		.addFunction("blit", &SDL::Screen::blit)
+		.addFunction("blitRect", &SDL::Screen::blitRect)
 		.addFunction("drawrect", &SDL::Screen::drawrect)
 		.addFunction("clip", &SDL::Screen::clip)
 		.addFunction("unclip", &SDL::Screen::unclip)
