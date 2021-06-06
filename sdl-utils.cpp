@@ -877,33 +877,60 @@ void Timer::reset() {
 	startTime = SDL_GetTicks();
 }
 
+HWND currentWindowHandle = NULL;
+HWND getCurrentWindowHandle() {
+	if (currentWindowHandle == NULL)
+		currentWindowHandle = FindWindowA(NULL, "Into the Breach");
+
+	return currentWindowHandle;
+}
+
 void setClipboardData(std::string text) {
-	const size_t len = text.length() + 1;
-	HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
-	memcpy(GlobalLock(hMem), text.c_str(), len);
+	HWND currentWindow = getCurrentWindowHandle();
+
+	if (currentWindow == NULL)
+		return;
+	if (!OpenClipboard(currentWindow))
+		return;
+
+	const size_t length = text.length();
+	HANDLE hMem = GlobalAlloc(GMEM_MOVEABLE, length + 1);
+	if (hMem == nullptr) {
+		CloseClipboard();
+		return;
+	}
+
+	char* c_str = static_cast<char*>(GlobalLock(hMem));
+	memcpy(c_str, text.c_str(), length);
+	c_str[length] = NULL;
 	GlobalUnlock(hMem);
 
-	if (!OpenClipboard(nullptr))
-		return;
-
 	EmptyClipboard();
-	if (!SetClipboardData(CF_TEXT, hMem))
-		return;
-
+	SetClipboardData(CF_TEXT, hMem);
 	CloseClipboard();
 }
 
 std::string getClipboardData() {
-	if (!OpenClipboard(nullptr))
+	HWND currentWindow = getCurrentWindowHandle();
+
+	if (currentWindow == NULL)
+		return "";
+	if (!IsClipboardFormatAvailable(CF_TEXT))
+		return "";
+	if (!OpenClipboard(currentWindow))
 		return "";
 
-	HGLOBAL hMem = GetClipboardData(CF_TEXT);
-	if (hMem == nullptr)
+	HANDLE hMem = GetClipboardData(CF_TEXT);
+	if (hMem == nullptr) {
+		CloseClipboard();
 		return "";
+	}
 
 	char* c_str = static_cast<char*>(GlobalLock(hMem));
-	if (c_str == nullptr)
+	if (c_str == nullptr) {
+		CloseClipboard();
 		return "";
+	}
 
 	std::string text(c_str);
 	GlobalUnlock(hMem);
