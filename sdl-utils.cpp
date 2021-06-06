@@ -877,5 +877,40 @@ void Timer::reset() {
 	startTime = SDL_GetTicks();
 }
 
+void setClipboardData(std::string text) {
+	const size_t len = text.length() + 1;
+	HGLOBAL hMem = GlobalAlloc(GMEM_MOVEABLE, len);
+	memcpy(GlobalLock(hMem), text.c_str(), len);
+	GlobalUnlock(hMem);
+
+	if (!OpenClipboard(nullptr))
+		return;
+
+	EmptyClipboard();
+	if (!SetClipboardData(CF_TEXT, hMem))
+		return;
+
+	CloseClipboard();
+}
+
+std::string getClipboardData() {
+	if (!OpenClipboard(nullptr))
+		return "";
+
+	HGLOBAL hMem = GetClipboardData(CF_TEXT);
+	if (hMem == nullptr)
+		return "";
+
+	char* c_str = static_cast<char*>(GlobalLock(hMem));
+	if (c_str == nullptr)
+		return "";
+
+	std::string text(c_str);
+	GlobalUnlock(hMem);
+	CloseClipboard();
+
+	return text;
+}
+
 }
 

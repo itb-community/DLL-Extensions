@@ -309,6 +309,11 @@ void installFunctions(lua_State *L) {
 		.addFunction("y", SDL::mousey)
 		.endNamespace()
 
+		.beginNamespace("clipboard")
+		.addFunction("set", SDL::setClipboardData)
+		.addFunction("get", SDL::getClipboardData)
+		.endNamespace()
+
 		.endNamespace();
 
 	getGlobalNamespace(L)
