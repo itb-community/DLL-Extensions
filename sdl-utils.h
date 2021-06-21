@@ -223,6 +223,9 @@ struct Timer {
 int mousex();
 int mousey();
 
+void setClipboardData(std::string);
+std::string getClipboardData();
+
 struct Coord { GLdouble x; GLdouble y; Coord() { x = y = 0;  } };
 
 extern std::vector< DrawHook * > hookListDraw;
