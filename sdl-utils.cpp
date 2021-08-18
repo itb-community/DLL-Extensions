@@ -819,8 +819,8 @@ void Screen::unmask(size_t count) {
 }
 
 void Screen::clearmask() {
-	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	glStencilFunc(GL_ALWAYS, 0, 0xFF);
 	glStencilMask(0xFF);
 
 	maskRects.clear();
