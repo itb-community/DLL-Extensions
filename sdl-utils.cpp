@@ -780,6 +780,52 @@ void Screen::unclip() {
 	applyClipping();
 }
 
+void Screen::mask(Rect* rect) {
+	glEnable(GL_STENCIL_TEST);
+
+	glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilMask(0xFF);
+
+	maskRects.push_back(*rect);
+	drawrect(&Color::Transparent, rect);
+
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	glStencilFunc(GL_EQUAL, 0, 0xFF);
+	glStencilMask(0x00);
+}
+
+void Screen::unmask(size_t count) {
+	glEnable(GL_STENCIL_TEST);
+
+	glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
+	glStencilFunc(GL_GREATER, 1, 0xFF);
+	glStencilMask(0xFF);
+
+	while (count-- > 0 && !maskRects.empty()) {
+		auto rect = maskRects.back();
+
+		drawrect(&Color::Transparent, &rect);
+
+		maskRects.pop_back();
+	}
+
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	glStencilFunc(GL_EQUAL, 0, 0xFF);
+	glStencilMask(0x00);
+}
+
+void Screen::clearmask() {
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilMask(0xFF);
+
+	maskRects.clear();
+
+	glClear(GL_STENCIL_BUFFER_BIT);
+	glDisable(GL_STENCIL_TEST);
+}
+
 void Screen::applyClipping() {
 	if(clippingRects.empty()) {
 		glDisable(GL_SCISSOR_TEST);
