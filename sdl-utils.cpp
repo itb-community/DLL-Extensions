@@ -799,7 +799,7 @@ void Screen::unmask(size_t count) {
 	glEnable(GL_STENCIL_TEST);
 
 	glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
-	glStencilFunc(GL_GEQUAL, 1, 0xFF);
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
 	glStencilMask(0xFF);
 
 	while (count-- > 0 && !maskRects.empty()) {
