@@ -22,6 +22,8 @@ GLuint glTexture(unsigned char *pixelData, int w, int h);
 
 struct Color :public SDL_Color {
 	static Color White;
+	static Color Black;
+	static Color Transparent;
 	Color();
 	Color(int r, int g, int b, int a);
 	Color(int r, int g, int b);

@@ -145,6 +145,8 @@ void installFunctions(lua_State *L) {
 
 		.beginClass <SDL::Color>("color")
 		.addStaticData("white", &SDL::Color::White, false)
+		.addStaticData("black", &SDL::Color::Black, false)
+		.addStaticData("transparent", &SDL::Color::Transparent, false)
 		.addData("r", &SDL::Color::r)
 		.addData("g", &SDL::Color::g)
 		.addData("b", &SDL::Color::b)

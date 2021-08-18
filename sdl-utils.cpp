@@ -85,6 +85,8 @@ Color::Color(int r, int g, int b) {
 }
 
 Color Color::White = Color();
+Color Color::Black = Color(0, 0, 0);
+Color Color::Transparent = Color(0, 0, 0, 0);
 
 Rect::Rect(int x, int y, int w, int h) {
 	this->x = x;
