@@ -22,6 +22,8 @@ GLuint glTexture(unsigned char *pixelData, int w, int h);
 
 struct Color :public SDL_Color {
 	static Color White;
+	static Color Black;
+	static Color Transparent;
 	Color();
 	Color(int r, int g, int b, int a);
 	Color(int r, int g, int b);
@@ -150,6 +152,7 @@ struct SurfaceScreenshot :public Surface {
 struct Screen {
 	SDL_Window* window;
 	std::vector<Rect> clippingRects;
+	std::vector<Rect> maskRects;
 
 	Screen();
 
@@ -176,6 +179,9 @@ struct Screen {
 	void drawrect(Color *color, Rect *rect);
 	void clip(Rect *rect);
 	void unclip();
+	void mask(Rect *rect);
+	void unmask(size_t count);
+	void clearmask();
 	Rect* getClipRect();
 
 protected:
