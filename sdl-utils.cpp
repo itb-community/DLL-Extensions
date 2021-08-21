@@ -93,6 +93,15 @@ Rect::Rect(int x, int y, int w, int h) {
 	this->h = h;
 }
 
+bool Rect::contains(int x, int y) {
+	SDL_Point p = { x, y };
+	return SDL_PointInRect(&p, this);
+}
+
+bool Rect::intersects(Rect* other) {
+	return SDL_HasIntersection(this, other);
+}
+
 Rect Rect::getIntersect(Rect* other) {
 	Rect* result;
 	if (SDL_IntersectRect(this, other, result)) {

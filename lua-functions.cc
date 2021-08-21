@@ -283,6 +283,8 @@ void installFunctions(lua_State *L) {
 		.addData("y", &SDL::Rect::y)
 		.addData("w", &SDL::Rect::w)
 		.addData("h", &SDL::Rect::h)
+		.addFunction("contains", &SDL::Rect::contains)
+		.addFunction("intersects", &SDL::Rect::intersects)
 		.addFunction("getIntersect", &SDL::Rect::getIntersect)
 		.addFunction("getUnion", &SDL::Rect::getUnion)
 		.endClass()

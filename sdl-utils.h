@@ -29,6 +29,8 @@ struct Color :public SDL_Color {
 
 struct Rect :public SDL_Rect {
 	Rect(int x, int y, int w, int h);
+	bool contains(int x, int y);
+	bool intersects(Rect*);
 	Rect getIntersect(Rect*);
 	Rect getUnion(Rect*);
 };
