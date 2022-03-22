@@ -11,6 +11,7 @@ using namespace luabridge;
 #include "SDL_syswm.h"
 #include <vector>
 #include <algorithm>
+#include <regex>
 
 int listDirectoryFull(lua_State *L, int mode) {
 	const char *dirname = lua_tostring(L, 1);
@@ -19,8 +20,12 @@ int listDirectoryFull(lua_State *L, int mode) {
 
 	WIN32_FIND_DATAA fdFile;
 	HANDLE handle = NULL;
+	std::regex startsWithDriveLetter("^.:.*$");
+	std::string path = format("%s\\*.*", dirname);
 
-	std::string path = format(".\\%s\\*.*", dirname);
+	if (!std::regex_match(path, startsWithDriveLetter))
+		path = format(".\\%s", path);
+		
 	if((handle = FindFirstFileA(path.c_str(), &fdFile)) == INVALID_HANDLE_VALUE) {
 		return 1;
 	}
