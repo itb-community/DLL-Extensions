@@ -3,7 +3,7 @@
 This library works as a proxy for multiple DLLs for the [Into the Breach](https://subsetgames.com/itb.html) game in order to provide additional functionality to the modding community. 
 
 ## Installation
-This library is not used directly for modding, instead you should download [kartoFlane's modloader](https://github.com/kartoFlane/ITB-ModLoader) which ships a release of this dll.
+This library is not used directly for modding, instead you should download [the community's modloader](https://github.com/itb-community/ITB-ModLoader) which ships a release of this dll.
 
 ## Building
 
