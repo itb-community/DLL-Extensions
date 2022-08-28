@@ -28,9 +28,9 @@ int listDirectoryFull(lua_State *L, int mode) {
 	std::string path;
 
 	if (!std::regex_match(dirname, startsWithDriveLetter))
-		path = regex_replace(dirname, fullPath, ".\\$1\\*.*");
+		path = format(".\\%s\\*.*", dirname);
 	else
-		path = regex_replace(dirname, fullPath, "$1\\*.*");
+		path = format("%s\\*.*", dirname);
 		
 	if((handle = FindFirstFileA(path.c_str(), &fdFile)) == INVALID_HANDLE_VALUE) {
 		return 1;
