@@ -23,7 +23,6 @@ int listDirectoryFull(lua_State *L, int mode) {
 
 	WIN32_FIND_DATAA fdFile;
 	HANDLE handle = NULL;
-	std::regex fullPath("(.*)");
 	std::regex startsWithDriveLetter("^.:.*$");
 	std::string path;
 
